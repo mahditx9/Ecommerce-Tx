@@ -5,8 +5,9 @@ import { Link } from "react-router-dom";
 import { styles } from "../../styles";
 import Button from "../UI/Button";
 import { useShopCard } from "../../contexts/shopCard";
+import { memo } from "react";
 
-function Product({ product }) {
+const Product = memo(function Product({ product }) {
   const { id, title, price, image, rating } = product;
   const { rate } = rating;
   const { onAdd } = useShopCard();
@@ -40,6 +41,5 @@ function Product({ product }) {
       </div>
     </Link>
   );
-}
-
+});
 export default Product;

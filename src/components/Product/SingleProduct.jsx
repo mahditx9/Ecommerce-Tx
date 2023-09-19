@@ -1,19 +1,25 @@
+/* eslint-disable no-unused-vars */
 import { useEffect } from "react";
-import { useProducts } from "../../contexts/productsApi";
 import { useParams } from "react-router-dom";
 import Rating from "../Rating";
 import { styles } from "../../styles";
 import Button from "../UI/Button";
 import Spinner from "../UI/Spinner";
 import Message from "../UI/Message";
+import { useDispatch, useSelector } from "react-redux";
+import { getSingleProduct } from "../../redux/productsSlice";
+// ----------------------------------------------------
 function SingleProduct() {
+  // ----------------------------------------------------
+
   const { id: urlID } = useParams();
-  const { singleProduct, getProduct, isLoading, error } = useProducts();
-
+  const dispatch = useDispatch();
+  const { product, isLoading, error } = useSelector((store) => store.products);
   useEffect(() => {
-    getProduct(Number(urlID));
-  }, [urlID, getProduct]);
+    dispatch(getSingleProduct(urlID));
+  }, [dispatch, urlID]);
 
+  // ----------------------------------------------------
   const {
     id,
     title,
@@ -21,9 +27,11 @@ function SingleProduct() {
     description,
     image,
     rating = { rate: "N/A", count: "N/A" },
-  } = singleProduct;
+  } = product;
   const rate = rating.rate;
   const count = rating.count;
+
+  // ----------------------------------------------------
   if (isLoading) return <Spinner />;
   if (error)
     return <Message message="There is an error while loading this product " />;
@@ -70,7 +78,7 @@ function SingleProduct() {
           />
         </div>
       </div>
-      <Button onClick={() => {}} style="w-[80%] mx-auto mt-3">
+      <Button onClick={() => {}} style="w-[80%] ss:w-[50%] mx-auto mt-3">
         Add To Card
       </Button>
     </div>

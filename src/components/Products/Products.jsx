@@ -1,17 +1,20 @@
 /* eslint-disable no-unused-vars */
 import { useEffect } from "react";
-import { useProducts } from "../../contexts/productsApi";
+import { getAllProducts } from "../../redux/productsSlice";
 import Product from "./Product";
 import Spinner from "../UI/Spinner";
 import Message from "../UI/Message";
 import Filter from "../Filter/Filter";
+import { useDispatch, useSelector } from "react-redux";
 function Products() {
-  const { products, getProducts, isLoading, error } = useProducts();
-
+  // -------------------------------
+  const dispatch = useDispatch();
+  const { products, isLoading, error } = useSelector((store) => store.products);
   useEffect(() => {
-    getProducts();
-  }, [getProducts]);
+    dispatch(getAllProducts());
+  }, [dispatch]);
 
+  // -------------------------------
   if (isLoading) return <Spinner />;
   if (error) return <Message message={error} />;
   return (

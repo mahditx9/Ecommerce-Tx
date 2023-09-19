@@ -14,7 +14,7 @@ function ProductPage() {
         >
           <AbsPath>{`Shop/Product/${id}`}</AbsPath>
           <SingleProduct />
-          <ProductsInCategory />
+          {/* <ProductsInCategory /> */}
           <Comments />
         </div>
       </section>
